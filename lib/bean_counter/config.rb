@@ -5,17 +5,6 @@ module BeanCounter
     extend self
     extend Options
 
-    # General Settings
-    option :log_level
-
-    # Netsuite Settings
-    option :netsuite_account_id
-    option :netsuite_login
-    option :netsuite_password
-    option :netsuite_role_id
-
-    # Storage Settings
-
     def load!(path)
       options = load_yaml(path) if settings
     end
