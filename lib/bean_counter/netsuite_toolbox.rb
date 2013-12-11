@@ -6,13 +6,6 @@ module BeanCounter
 
     SEARCH_RECORD_TYPE = 'inventoryitem'
 
-    Config.option :netsuite_account_id
-    Config.option :netsuite_login
-    Config.option :netsuite_password
-    Config.option :netsuite_role_id
-    Config.option :netsuite_search_id_recent_items
-    Config.option :netsuite_search_id_all_items
-
     def recently_changed_items
       puts "Fetching records from Netsuite..."
       client.get_saved_search(SEARCH_RECORD_TYPE, Config.netsuite_search_id_recent_items)

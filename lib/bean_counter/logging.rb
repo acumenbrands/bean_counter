@@ -1,9 +1,26 @@
-module BeanCounter
+ module BeanCounter
 
-  module Logging
+   module Logging
 
-    extend self
+     extend self
 
-  end
+     def logger
+       @logger ||= new_logger
+     end
 
-end
+     def logger=(logger)
+       @logger = logger
+     end
+
+     private
+
+     def new_logger
+       arguments =  [Config.log_path]
+       arguments << Config.log_count if Config.log_count
+       arguments << Config.log_size  if Config.log_size
+       ::Logger.new(*arguments)
+     end
+
+   end
+
+ end
