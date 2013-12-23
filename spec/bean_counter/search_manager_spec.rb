@@ -20,7 +20,7 @@ describe BeanCounter::SearchManager do
   describe 'a typical search' do
 
     before do
-      toolbox.stub("#{search_name}_search").and_return(first_result_set, second_result_set)
+      toolbox.stub(:search).and_return(first_result_set, second_result_set)
       search.execute_and_cache!
     end
 
@@ -41,7 +41,7 @@ describe BeanCounter::SearchManager do
   describe 'a search that ends with an empty set' do
 
     before do
-      toolbox.stub("#{search_name}_search").and_return(first_result_set, [])
+      toolbox.stub(:search).and_return(first_result_set, [])
       search.execute_and_cache!
     end
 
@@ -58,7 +58,7 @@ describe BeanCounter::SearchManager do
   describe 'a search that returns an empty set' do
 
     before do
-      toolbox.stub("#{search_name}_search").and_return([])
+      toolbox.stub(:search).and_return([])
       search.execute_and_cache!
     end
 

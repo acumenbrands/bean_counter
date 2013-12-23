@@ -13,6 +13,10 @@ module BeanCounter
       raise Errors::SearchIdSetNotAHash.new
     end
 
+    def search(name, start_id)
+      get_search_results(search_id(name), start_id)
+    end
+
     def get_search_results(search_id, start_id)
       client.get_saved_search(
         SEARCH_RECORD_TYPE, search_id,
@@ -20,16 +24,6 @@ module BeanCounter
         exit_after_first_batch: true,
         search_batch_size:      SEARCH_BATCH_SIZE
       )
-    end
-
-    def method_missing(method, *args, &block)
-      if method =~ /_search$/
-        search_name = method.to_s.gsub(/_search$/,'').to_sym
-        search_id   = search_id(search_name)
-        get_search_results(search_id, *args)
-      else
-        super
-      end
     end
 
     def client

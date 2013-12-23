@@ -21,5 +21,7 @@ RSpec.configure do |config|
 
     BeanCounter::Config.netsuite_searches = {}
     BeanCounter::Config.netsuite_searches[:test] = '1234'
+
+    BeanCounter::Logging.logger = Logger.new('/dev/null')
   end
 end

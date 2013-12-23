@@ -48,7 +48,7 @@ module BeanCounter
 
     def fetch_next_result_set
       ::BeanCounter::Logging.info("Fetching result set starting with id: #{@last_item_id}...")
-      NetsuiteToolbox.send("#{search_name}_search", @last_item_id)
+      NetsuiteToolbox.search(search_name, @last_item_id)
     end
 
   end

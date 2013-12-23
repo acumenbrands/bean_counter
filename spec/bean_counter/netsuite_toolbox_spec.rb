@@ -18,7 +18,7 @@ describe BeanCounter::NetsuiteToolbox do
     let(:search_type) { BeanCounter::NetsuiteToolbox::SEARCH_RECORD_TYPE }
 
     let(:perform_search) do
-      BeanCounter::NetsuiteToolbox.public_send("#{name}_search")
+      BeanCounter::NetsuiteToolbox.search(name, start_id)
     end
 
     context 'a given named search has an id' do
@@ -35,7 +35,7 @@ describe BeanCounter::NetsuiteToolbox do
 
       before do
         BeanCounter::NetsuiteToolbox.add_search(name, id)
-        BeanCounter::NetsuiteToolbox.public_send("#{name}_search", start_id)
+        perform_search
       end
 
       it 'invokes the saved search with the correct id' do
