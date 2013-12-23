@@ -30,18 +30,18 @@ end
 
 ### Settings
 
-* cache_namespace: This is the string that will be prepended to all redis keys
-* log_path: The string path to the log file to be used (Rails defaults to the rails logger instead)
-* log_level: Symbol for the default logger level (default: :error)
-* log_count: Max count of log files (default: 10)
-* log_size: Maximum size of the log files before a new file is created (default: 1048576)
-* netsuite_account_id: The account id for Netsuite access
-* netsuite_login: The login to be used for Netsuite access
-* netsuite_password: The password to be used for Netsuite access
-* netsuite_role_id: The role id to be used for Netsuite access
-* netsuite_searches: A hash of netsuite search ids (detailed below)
-* netsuite_vendor_quantity_field: Symbol of the vendor quantity field (default: custitem22)
-* netsuite_warehouse_quantity_field: Symbol of the warehouse quantity field (default: :quantityavailable)
+* **cache_namespace**: This is the string that will be prepended to all redis keys
+* **log_path**: The string path to the log file to be used (Rails defaults to the rails logger instead)
+* **log_level**: Symbol for the default logger level (default: :error)
+* **log_count**: Max count of log files (default: 10)
+* **log_size**: Maximum size of the log files before a new file is created (default: 1048576)
+* **netsuite_account_id**: The account id for Netsuite access
+* **netsuite_login**: The login to be used for Netsuite access
+* **netsuite_password**: The password to be used for Netsuite access
+* **netsuite_role_id**: The role id to be used for Netsuite access
+* **netsuite_searches**: A hash of netsuite search ids (detailed below)
+* **netsuite_vendor_quantity_field**: Symbol of the vendor quantity field (default: custitem22)
+* **netsuite_warehouse_quantity_field**: Symbol of the warehouse quantity field (default: :quantityavailable)
 
 ## Netsuite Searches
 
