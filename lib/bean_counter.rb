@@ -15,8 +15,8 @@ require_relative 'bean_counter/logging'
 require_relative 'bean_counter/netsuite_toolbox'
 
 require_relative 'bean_counter/cache'
-
 require_relative 'bean_counter/bean'
+require_relative 'bean_counter/search_manager'
 
 require_relative 'bean_counter/version'
 
@@ -34,11 +34,7 @@ module BeanCounter
   end
 
   def cache_search(search_name)
-    Cache.record(search_name)
-  end
-
-  def record
-    Storage.update_from_cache
+    SearchManager.execute_and_cache(search_name)
   end
 
 end

@@ -12,7 +12,7 @@ describe BeanCounter::Bean do
   let(:bean)   { BeanCounter::Bean.new(target) }
 
   before do
-    bean.stub(:update_from_cache)
+    bean.stub(:update_from_cache).and_return(true)
     bean.stub(:identifier_names).and_return(names)
   end
 
@@ -49,6 +49,22 @@ describe BeanCounter::Bean do
 
     it 'does not invoke update_from_cache' do
       expect(bean).to_not have_received(:update_from_cache)
+    end
+
+    it 'does not remove the cached data' do
+      expect(bean).to_not have_received(:remove_from_cache)
+    end
+
+  end
+
+  describe 'an item for which update_from_cache fails' do
+
+    before do
+      BeanCounter::Cache.send(:namespace).set(sku, value)
+      BeanCounter::Cache.send(:namespace).set(upc, value)
+      bean.stub(:update_from_cache).and_return(false)
+      bean.stub(:remove_from_cache)
+      bean.count!
     end
 
     it 'does not remove the cached data' do

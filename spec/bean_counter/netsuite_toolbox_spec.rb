@@ -13,6 +13,8 @@ describe BeanCounter::NetsuiteToolbox do
     let(:name) { :this_is_a_test }
     let(:id)   { '123' }
 
+    let(:start_id) { '74235' }
+
     let(:search_type) { BeanCounter::NetsuiteToolbox::SEARCH_RECORD_TYPE }
 
     let(:perform_search) do
@@ -21,14 +23,23 @@ describe BeanCounter::NetsuiteToolbox do
 
     context 'a given named search has an id' do
 
+      let(:search_args) do
+        [
+          search_type, id, {
+            start_id:               start_id,
+            exit_after_first_batch: true,
+            search_batch_size:      BeanCounter::NetsuiteToolbox::SEARCH_BATCH_SIZE
+          }
+        ]
+      end
+
       before do
         BeanCounter::NetsuiteToolbox.add_search(name, id)
-        BeanCounter::NetsuiteToolbox.public_send("#{name}_search")
+        BeanCounter::NetsuiteToolbox.public_send("#{name}_search", start_id)
       end
 
       it 'invokes the saved search with the correct id' do
-        expect(client_double).to have_received(:get_saved_search)
-          .with(search_type, id)
+        expect(client_double).to have_received(:get_saved_search).with(*search_args)
       end
 
     end

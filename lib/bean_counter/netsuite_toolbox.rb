@@ -5,6 +5,7 @@ module BeanCounter
     extend self
 
     SEARCH_RECORD_TYPE = 'inventoryitem'
+    SEARCH_BATCH_SIZE  = 1000
 
     def add_search(name, id)
       Config.netsuite_searches[name] = id
@@ -12,15 +13,20 @@ module BeanCounter
       raise Errors::SearchIdSetNotAHash.new
     end
 
-    def get_search_results(search_id)
-      client.get_saved_search(SEARCH_RECORD_TYPE, search_id)
+    def get_search_results(search_id, start_id)
+      client.get_saved_search(
+        SEARCH_RECORD_TYPE, search_id,
+        start_id:               start_id,
+        exit_after_first_batch: true,
+        search_batch_size:      SEARCH_BATCH_SIZE
+      )
     end
 
     def method_missing(method, *args, &block)
       if method =~ /_search$/
         search_name = method.to_s.gsub(/_search$/,'').to_sym
         search_id   = search_id(search_name)
-        get_search_results(search_id)
+        get_search_results(search_id, *args)
       else
         super
       end

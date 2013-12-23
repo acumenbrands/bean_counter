@@ -4,16 +4,8 @@ module BeanCounter
 
     extend self
 
-    def record_search(search_name)
-      shift_to_cache perform_search(search_name)
-    end
-
-    def perform_search(search_name)
-      NetsuiteToolbox.send("#{search_name}_search")
-    end
-
-    def shift_to_cache(cache_items)
-      cache_items.each { |item| write_to_cache(item) }
+    def record_search_results(items_to_cache)
+      items_to_cache.each { |item| write_to_cache(item) }
     end
 
     def write_to_cache(item)

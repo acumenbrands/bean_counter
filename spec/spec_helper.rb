@@ -19,6 +19,7 @@ RSpec.configure do |config|
     BeanCounter::Config.netsuite_password   = 'fake'
     BeanCounter::Config.netsuite_role_id    = 'fake'
 
+    BeanCounter::Config.netsuite_searches = {}
     BeanCounter::Config.netsuite_searches[:test] = '1234'
   end
 end

@@ -9,8 +9,7 @@ module BeanCounter
     end
 
     def count!
-      if find_in_cache
-        update_from_cache
+      if find_in_cache && update_from_cache
         remove_from_cache
       end
     end

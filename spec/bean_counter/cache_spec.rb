@@ -40,7 +40,7 @@ describe BeanCounter::Cache do
 
     before do
       Netsuite::Client.any_instance.stub(:get_saved_search).and_return(search_results)
-      BeanCounter::Cache.record_search(:test)
+      BeanCounter::Cache.record_search_results(search_results)
     end
 
     describe 'item one' do
