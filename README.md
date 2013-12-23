@@ -2,7 +2,7 @@
 
 Release: 1.3
 
-An Acumen Holdings gem for fetching and using inventory data from Netsuite
+An Acumen Holdings gem for fetching and using inventory data from Netsuite. This gem decouples the fetching of data and the use of the uniquely cached data in order to allow for fast, fault-tolerant inventory level processing.
 
 ## Installation
 
