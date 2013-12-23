@@ -21,15 +21,18 @@ module BeanCounter
     end
 
     def execute_and_cache!
+      ::BeanCounter::Logging.info("Starting search cache for #{search_name}...")
       begin
         update_search_context
         cache_current_result_set
       end while !done?
+      ::BeanCounter::Logging.info("Search caching complete!")
     end
 
     private
 
     def cache_current_result_set
+      ::BeanCounter::Logging.info("Caching results for set from id #{@last_item_id}...")
       Cache.record_search_results(@current_results) unless @current_results.empty?
     end
 
@@ -44,6 +47,7 @@ module BeanCounter
     end
 
     def fetch_next_result_set
+      ::BeanCounter::Logging.info("Fetching result set starting with id: #{@last_item_id}...")
       NetsuiteToolbox.send("#{search_name}_search", @last_item_id)
     end
 

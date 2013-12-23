@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = '2.1.10'
 
   s.name              = 'bean_counter'
-  s.version           = '1.0.0'
+  s.version           = '1.4.0'
   s.date              = '2013-12-11'
 
   s.description   = %q{A library to poll Netsuite for inventory and subsequently cache and store it}
