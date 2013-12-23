@@ -9,12 +9,14 @@ require_relative 'bean_counter/errors/search_id_set_not_a_hash'
 
 require_relative 'bean_counter/config/options'
 require_relative 'bean_counter/config'
+require_relative 'bean_counter/config/option_definitions'
 
 require_relative 'bean_counter/logging'
 require_relative 'bean_counter/netsuite_toolbox'
 
 require_relative 'bean_counter/cache'
-require_relative 'bean_counter/cache/item'
+
+require_relative 'bean_counter/bean'
 
 require_relative 'bean_counter/version'
 
@@ -22,21 +24,6 @@ module BeanCounter
 
   extend self
   extend Logging
-
-  Config.option :cache_namespace, default: 'bean-counter'
-
-  Config.option :log_path
-  Config.option :log_level,  default: :error
-  Config.option :log_count,  default: 10
-  Config.option :log_size,   default: 1048576
-
-  Config.option :netsuite_account_id
-  Config.option :netsuite_login
-  Config.option :netsuite_password
-  Config.option :netsuite_role_id
-  Config.option :netsuite_searches, default: {}
-
-  Config.option :cache_formatter, default: NetsuiteToolkit::Formatter
 
   def load!(path)
     Config.load!(path)
@@ -46,7 +33,7 @@ module BeanCounter
     block_given? ? yield(Config) : Config
   end
 
-  def cache_all(search_name)
+  def cache_search(search_name)
     Cache.record(search_name)
   end
 

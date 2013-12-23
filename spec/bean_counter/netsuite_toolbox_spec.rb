@@ -5,10 +5,6 @@ describe BeanCounter::NetsuiteToolbox do
   let(:client_double) { double('client', get_saved_search: true) }
 
   before do
-    BeanCounter::Config.netsuite_account_id = 'fake'
-    BeanCounter::Config.netsuite_login      = 'fake'
-    BeanCounter::Config.netsuite_password   = 'fake'
-    BeanCounter::Config.netsuite_role_id    = 'fake'
     Netsuite::Client.stub(:new).and_return(client_double)
   end
 

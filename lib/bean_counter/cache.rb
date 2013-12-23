@@ -1,35 +1,47 @@
- module BeanCounter
+module BeanCounter
 
-   module Cache
+  module Cache
 
-     extend self
+    extend self
 
-     def record(search_name)
-       shift_to_cache(NetsuiteToolbox.public_send("#{search_name}_search"))
-     end
+    def record_search(search_name)
+      shift_to_cache perform_search(search_name)
+    end
 
-     def shift_to_cache(items_to_cache)
-       items_to_cache.each do |item|
-         write_to_cache format_item(item)
-       end
-     end
+    def perform_search(search_name)
+      NetsuiteToolbox.send("#{search_name}_search")
+    end
 
-     def write_to_cache(item)
-       namespace[item.identifier] = item.value
-     end
+    def shift_to_cache(cache_items)
+      cache_items.each { |item| write_to_cache(item) }
+    end
 
-     def format_item(item)
-       Config.cache_formatter.format(item)
-     end
+    def write_to_cache(item)
+      namespace.set(item[:columns][:displayname], quantity_json(item))
+      namespace.set(item[:columns][:upccode],     quantity_json(item))
+    end
 
-     def values_for(identifier)
-       namespace[identifier]
-     end
+    def quantity_json(item)
+      {
+        vendor:    item[:columns][Config.netsuite_vendor_quantity_field],
+        warehouse: item[:columns][Config.netsuite_warehouse_quantity_field]
+      }.to_json
+    end
 
-     def namespace
-       @namespace ||= Redis::Namespace.new(Config.cache_namespace)
-     end
+    def get(identifier)
+      namespace.get(identifier)
+    end
 
-   end
+    def delete(identifier)
+      namespace.del(identifier)
+    end
 
- end
+    private
+
+    def namespace
+      @namespace ||= Redis::Namespace.new(Config.cache_namespace)
+    end
+
+  end
+
+end
