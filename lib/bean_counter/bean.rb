@@ -2,22 +2,34 @@ module BeanCounter
 
   class Bean
 
-    attr_reader :target, :cached_data, :identifiers
+    attr_reader :target, :cached_data
 
     def initialize(target)
       @target = target
     end
 
     def count!
-      if find_in_cache && update_from_cache
+      if get_cached_data && update_from_cache
         remove_from_cache
+      end
+    end
+
+    def identifiers
+      identifier_names.map do |name|
+        target.send(name)
       end
     end
 
     private
 
+    def get_cached_data
+      @cached_data = find_in_cache.detect do |cached_data|
+        !cached_data.nil?
+      end
+    end
+
     def find_in_cache
-      @cached_data ||= identifiers.detect do |identifier|
+      identifiers.map do |identifier|
         BeanCounter::Cache.get(identifier)
       end
     end
@@ -28,10 +40,8 @@ module BeanCounter
       end
     end
 
-    def identifiers
-      @identifiers ||= identifier_names.map do |name|
-        target.send(name)
-      end
+    def update_from_cache
+      raise NotImplementedError
     end
 
   end

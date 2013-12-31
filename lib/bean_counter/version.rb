@@ -1,5 +1,5 @@
 module BeanCounter
 
-  VERSION = '1.4'
+  VERSION = '1.0'
 
 end

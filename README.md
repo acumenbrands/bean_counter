@@ -1,6 +1,6 @@
 # Bean Counter
 
-Release: 1.4
+Release: 1.0
 
 An Acumen Holdings gem for fetching and using inventory data from Netsuite. This gem decouples the fetching of data and the use of the uniquely cached data in order to allow for fast, fault-tolerant inventory level processing.
 
@@ -9,7 +9,7 @@ An Acumen Holdings gem for fetching and using inventory data from Netsuite. This
 Just add the gem to your project's Gemfile:
 
 ````ruby
-gem 'bean_counter', git: 'git@github.com:acumenbrands/bean_counter.git', tag: '1.4'
+gem 'bean_counter', git: 'git@github.com:acumenbrands/bean_counter.git', tag: '1.0'
 ````
 
 ## Configuration

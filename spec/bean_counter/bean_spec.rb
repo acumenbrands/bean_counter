@@ -7,11 +7,29 @@ describe BeanCounter::Bean do
   let(:value) { 'a positive integer value' }
   let(:names) { [:sku_with_vendor, :upc_code] }
 
-  let(:target) { double(true, sku_with_vendor: sku, upc_code: upc) }
+  let(:vendor_field)    { :custitem22 }
+  let(:warehouse_field) { :quantityavailable }
+
+  let(:item) do
+    {
+      columns: {
+        :displayname    => sku,
+        :upccode        => upc,
+        warehouse_field => value,
+        vendor_field    => value
+      }
+    }
+  end
+
+  let(:expected_json) { BeanCounter::Cache.quantity_json(item) }
+
+  let(:target) { double('target', sku_with_vendor: sku, upc_code: upc) }
 
   let(:bean)   { BeanCounter::Bean.new(target) }
 
   before do
+    BeanCounter::Config.stub(:netsuite_vendor_quantity_field).and_return(vendor_field)
+    BeanCounter::Config.stub(:netsuite_warehouse_quantity_field).and_return(warehouse_field)
     bean.stub(:update_from_cache).and_return(true)
     bean.stub(:identifier_names).and_return(names)
   end
@@ -19,9 +37,12 @@ describe BeanCounter::Bean do
   describe 'an item with cached data' do
 
     before do
-      BeanCounter::Cache.send(:namespace).set(sku, value)
-      BeanCounter::Cache.send(:namespace).set(upc, value)
+      BeanCounter::Cache.write_to_cache(item)
       bean.count!
+    end
+
+    it 'collects the correct value' do
+      expect(bean.cached_data).to eq(expected_json)
     end
 
     it 'invokes update_from_cache' do
@@ -60,8 +81,7 @@ describe BeanCounter::Bean do
   describe 'an item for which update_from_cache fails' do
 
     before do
-      BeanCounter::Cache.send(:namespace).set(sku, value)
-      BeanCounter::Cache.send(:namespace).set(upc, value)
+      BeanCounter::Cache.write_to_cache(item)
       bean.stub(:update_from_cache).and_return(false)
       bean.stub(:remove_from_cache)
       bean.count!
