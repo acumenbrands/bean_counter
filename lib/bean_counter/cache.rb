@@ -21,7 +21,7 @@ module BeanCounter
     end
 
     def get(identifier)
-      namespace.get(identifier)
+      JSON.parse(namespace.get(identifier))
     end
 
     def delete(identifier)
