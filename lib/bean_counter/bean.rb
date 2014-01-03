@@ -2,14 +2,14 @@ module BeanCounter
 
   class Bean
 
-    attr_reader :target, :cached_data
+    attr_reader :target
 
     def initialize(target)
       @target = target
     end
 
     def count!
-      if get_cached_data && update_from_cache
+      if cached_data && update_from_cache
         remove_from_cache
       end
     end
@@ -20,13 +20,13 @@ module BeanCounter
       end
     end
 
-    private
-
-    def get_cached_data
-      @cached_data = find_in_cache.detect do |cached_data|
+    def cached_data
+      @cached_data ||= find_in_cache.detect do |cached_data|
         !cached_data.nil?
       end
     end
+
+    private
 
     def find_in_cache
       identifiers.map do |identifier|
