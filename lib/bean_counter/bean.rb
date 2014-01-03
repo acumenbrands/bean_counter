@@ -20,7 +20,7 @@ module BeanCounter
       end
     end
 
-    private
+    protected
 
     def get_cached_data
       @cached_data = find_in_cache.detect do |cached_data|
