@@ -20,13 +20,13 @@ module BeanCounter
       end
     end
 
-    protected
-
     def cached_data
       @cached_data ||= find_in_cache.detect do |cached_data|
         !cached_data.nil?
       end
     end
+
+    private
 
     def find_in_cache
       identifiers.map do |identifier|
