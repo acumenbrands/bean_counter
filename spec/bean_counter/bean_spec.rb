@@ -21,7 +21,7 @@ describe BeanCounter::Bean do
     }
   end
 
-  let(:expected_json) { BeanCounter::Cache.quantity_json(item) }
+  let(:expected_hash) { JSON.parse(BeanCounter::Cache.quantity_json(item)) }
 
   let(:target) { double('target', sku_with_vendor: sku, upc_code: upc) }
 
@@ -42,7 +42,7 @@ describe BeanCounter::Bean do
     end
 
     it 'collects the correct value' do
-      expect(bean.cached_data).to eq(expected_json)
+      expect(bean.cached_data).to eq(expected_hash)
     end
 
     it 'invokes update_from_cache' do

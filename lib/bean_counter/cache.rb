@@ -15,13 +15,14 @@ module BeanCounter
 
     def quantity_json(item)
       {
-        vendor:    item[:columns][vendor_field],
-        warehouse: item[:columns][warehouse_field]
+        vendor:    item[:columns][vendor_field].to_i,
+        warehouse: item[:columns][warehouse_field].to_i
       }.to_json
     end
 
     def get(identifier)
-      JSON.parse(namespace.get(identifier))
+      json_hash = namespace.get(identifier)
+      JSON.parse(namespace.get(identifier)) if json_hash
     end
 
     def delete(identifier)
