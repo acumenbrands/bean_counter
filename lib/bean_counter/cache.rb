@@ -32,7 +32,11 @@ module BeanCounter
     private
 
     def namespace
-      @namespace ||= Redis::Namespace.new(Config.cache_namespace)
+      @namespace ||= Redis::Namespace.new(Config.cache_namespace, redis: redis_connection)
+    end
+
+    def redis_connection
+      Redis.new(host: Config.redis_host, port: Config.redis_port)
     end
 
     def vendor_field

@@ -1,6 +1,8 @@
 module BeanCounter
 
   Config.option :cache_namespace, default: 'bean-counter'
+  Config.option :redis_host,      default: '127.0.0.1'
+  Config.option :redis_port,      default: '6379'
 
   Config.option :log_path
   Config.option :log_level,  default: :error
