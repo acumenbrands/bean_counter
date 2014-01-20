@@ -22,7 +22,7 @@ module BeanCounter
 
     def get(identifier)
       json_hash = namespace.get(identifier)
-      JSON.parse(namespace.get(identifier)) if json_hash
+      JSON.parse(json_hash) if json_hash
     end
 
     def delete(identifier)
@@ -32,7 +32,7 @@ module BeanCounter
     private
 
     def namespace
-      @namespace ||= Redis::Namespace.new(Config.cache_namespace, redis: redis_connection)
+      Redis::Namespace.new(Config.cache_namespace, redis: redis_connection)
     end
 
     def redis_connection
