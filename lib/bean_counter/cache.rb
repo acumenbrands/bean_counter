@@ -36,7 +36,7 @@ module BeanCounter
     end
 
     def redis_connection
-      Redis.new(host: Config.redis_host, port: Config.redis_port)
+      @connection ||= Redis.new(host: Config.redis_host, port: Config.redis_port)
     end
 
     def vendor_field
