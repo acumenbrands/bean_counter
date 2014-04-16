@@ -38,5 +38,3 @@ module BeanCounter
   end
 
 end
-
-require_relative 'bean_counter/railtie' if defined?(Rails)
