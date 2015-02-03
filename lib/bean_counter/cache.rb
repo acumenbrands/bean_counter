@@ -14,9 +14,16 @@ module BeanCounter
     end
 
     def quantity_json(item)
-      {
-        vendor:    item[:columns][vendor_field].to_i,
-        warehouse: item[:columns][warehouse_field].to_i
+      {}.tap { |qty_hash|
+        vendor_qty = item[:columns][vendor_field]
+        warehouse_qty = item[:columns][warehouse_field]
+
+        if vendor_qty
+          qty_hash[:vendor] = vendor_qty.to_i
+        end
+        if warehouse_qty
+          qty_hash[:warehouse] = warehouse_qty.to_i
+        end
       }.to_json
     end
 

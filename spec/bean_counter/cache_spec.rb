@@ -114,12 +114,12 @@ describe BeanCounter::Cache do
       BeanCounter::Cache.write_to_cache(item)
     end
 
-    it 'converts a nil value for vendor to zero' do
-      expect(vendor_quantity).to eq(0)
+    it 'tolerates a nil value for vendor' do
+      expect(vendor_quantity).to be_nil
     end
 
-    it 'converts a nil value for warehouse to zero' do
-      expect(warehouse_quantity).to eq(0)
+    it 'tolerates a nil value for warehouse' do
+      expect(warehouse_quantity).to be_nil
     end
 
   end
